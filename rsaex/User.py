@@ -32,3 +32,10 @@ class User(object):
         # It does not matter who the message is from, they encrypted with our key!
         decrypted_message = rsa.decrypt(message, self.private_key).decode()
         print(decrypted_message)
+
+    @classmethod
+    def exchange_keypair(cls, user, other_user):
+        if user.name not in other_user.contact_keystore:
+            other_user.contact_keystore[user.name] = user.obtain_public_key()
+        if other_user.name not in user.contact_keystore:
+            user.contact_keystore[other_user.name] = other_user.obtain_public_key()

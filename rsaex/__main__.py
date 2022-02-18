@@ -5,8 +5,9 @@ from rsaex.User import User
 bob = User("bob")
 alice = User("alice")
 
-# Initiate key exchange from either user
-alice.perform_key_exchange(bob)
+# Initiate key exchange from either user or use classmethod
+# alice.perform_key_exchange(bob)
+User.exchange_keypair(bob, alice)
 
 # Now alice has bob's public key, and vice versa.
 alice_message = f"My name is {alice.name}, ntmy!"
@@ -20,7 +21,7 @@ bob.encrypt_message_for_user("alice", bob_message)
 alice_encrypted_message = alice.message_store.pop()
 bob_encrypted_message = bob.message_store.pop()
 
-print("Mallory Sees:\n")
+print("Mallory Sees:")
 print(alice_encrypted_message)
 print(bob_encrypted_message)
 
